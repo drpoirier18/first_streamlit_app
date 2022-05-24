@@ -19,7 +19,7 @@ my_fruit_list = my_fruit_list.set_index('Fruit')
 
 #creating user interaction with a pick list, can pick the fruit they want
   #adding default fruits
-streamlit.multiselect("Pick some fruits:", list(my_fruit_list.index)['Avocado','Strawberries'])
+streamlit.multiselect("Pick some fruits:", list(my_fruit_list.index),['Avocado','Strawberries'])
 
 #displaying table on page
 streamlit.dataframe(my_fruit_list)
