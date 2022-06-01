@@ -30,6 +30,12 @@ fruits_to_show = my_fruit_list.loc[fruits_selected]
 #displaying table on page
 streamlit.dataframe(fruits_to_show)
 
+#create repeatable code block (funtion)
+def get_fruityvice_data(this_fruit_choice):
+  fruitvice_response = requests.get("https://fruityvice.com/api/fruit/" + this_fruit_choice)
+  fruityvice_normalized = panadas.json_normalize(fruityvice_response.json())
+  return fruityvice_normalized
+
 #New Section to display fruityvice api response
 streamlit.header('Fruityvice Fruit Advice!')
 try: 
@@ -37,11 +43,8 @@ try:
   if not fruit_choice:
     stream_lit.error("Please select a fruit to get more information.")
   else: 
-    fruitvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
-    fruityvice_normalized = panadas.json_normalize(fruityvice_response.json())
-    streamlit.dataframe(fruityvice_normalized)
-except URLError as e:
-  streamlit.error()
+    back_from_function = get_fruityvice_data(fruit_choice)
+    streamlit.dataframe(back_from_function)
 
 
 #not running anything past here while we troubleshoot
